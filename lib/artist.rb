@@ -3,16 +3,18 @@ require_relative '../config/environment.rb'
 
 class Artist
   extend Memorable::ClassMethods
-  include Memorable::ClassMethods
+  extend Findable::ClassMethods
+  include Memorable::InstanceMethods
+  include Paramable::InstanceMethods
 
   attr_accessor :name
   attr_reader :songs
 
   @@artists = []
 
-  def self.find_by_name(name)
-    @@artists.detect{|a| a.name == name}
-  end
+  #def self.find_by_name(name)
+  #  @@artists.detect{|a| a.name == name}
+  #end
 
   def initialize
     @@artists << self
@@ -38,10 +40,6 @@ class Artist
 
   def add_songs(songs)
     songs.each { |song| add_song(song) }
-  end
-
-  def to_param
-    name.downcase.gsub(' ', '-')
   end
 
 end
